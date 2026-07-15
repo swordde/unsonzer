@@ -18,12 +18,14 @@ type AlaramManeger interface {
 }
 
 func main() {
-	H := Alaram{Hour: 10, minute: 10}
+	H := Alaram{}
+	fmt.Scanf("%d", &H.Hour)
+	fmt.Scanf("%d", &H.minute)
 
 	c := Manager{}
 	c.Createalaram(H)
 	fmt.Println("Alarams:", c)
-	go c.Schedular()
+	c.Schedular()
 }
 
 func (c *Manager) Createalaram(a Alaram) {
@@ -38,7 +40,9 @@ func (c Manager) Schedular() {
 	for {
 		d := c.alram[0]
 		if hour == d.Hour && minute == d.Hour {
-			fmt.Printf("The alram is going on pls ")
+			fmt.Printf("The alram is going on pls finish the task to stop the alram")
+		} else {
+			break
 		}
 	}
 }
