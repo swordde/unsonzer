@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
+
+	"github.com/gopxl/beep/mp3"
+	"github.com/gopxl/beep/speaker"
 )
 
 type Alaram struct {
@@ -39,25 +43,32 @@ func (c Manager) Schedular() {
 
 	minute := now.Minute()
 	fmt.Printf("%v", hour)
+
+	i := 0
 	for {
+		time.Sleep(1 * time.Second)
 		d := c.alram[0]
 		if hour == d.Hour && minute == d.minute {
-			fmt.Printf("The alram is going on pls finish the task to stop the alram")
+			fmt.Println("The alram is going on pls finish the task to stop the alram")
 			Ringer()
 			time.Sleep(2 * time.Second)
 		} else {
-			fmt.Println("exited")
-			break
+			i = i + 1
+			fmt.Println("not %d yet!!", i)
 		}
 	}
 }
 
 func Ringer() {
+	f, _ := os.Open("/home/swordemon/Music/I Need More Space - Jeremy Black.mp3")
+	streamer, format, _ := mp3.Decode(f)
+	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/100))
+	speaker.Play(streamer)
 	for {
 
 		fmt.Println("its alarming!!!")
-
-		time.Sleep(1 * time.Minute)
+		time.Sleep(10 * time.Second)
+		speaker.Close()
 		break
 
 	}
