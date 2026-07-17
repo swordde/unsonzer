@@ -22,12 +22,16 @@ type AlaramManeger interface {
 }
 
 func main() {
-	H := Alaram{}
-	fmt.Scanf("%d", &H.Hour)
-	fmt.Scanf("%d", &H.minute)
-
+	n := 2
 	c := Manager{}
-	c.Createalaram(H)
+	//	fmt.Scanf("number of alrams:%d", &n)
+	for range n {
+		H := Alaram{}
+		fmt.Scanf("%d", &H.Hour)
+		fmt.Scanf("%d", &H.minute)
+
+		c.Createalaram(H)
+	}
 	fmt.Println("Alarams:", c)
 	c.Schedular()
 }
@@ -38,23 +42,25 @@ func (c *Manager) Createalaram(a Alaram) {
 }
 
 func (c Manager) Schedular() {
-	now := time.Now()
-	hour := now.Hour()
-
-	minute := now.Minute()
-	fmt.Printf("%v", hour)
-
 	i := 0
+	j := 0
 	for {
+		now := time.Now()
+		hour := now.Hour()
+
+		minute := now.Minute()
+		fmt.Printf("%v", hour)
+
 		time.Sleep(1 * time.Second)
-		d := c.alram[0]
+		d := c.alram[j]
 		if hour == d.Hour && minute == d.minute {
 			fmt.Println("The alram is going on pls finish the task to stop the alram")
 			Ringer()
 			time.Sleep(2 * time.Second)
+			j = +1
 		} else {
 			i = i + 1
-			fmt.Println("not %d yet!!", i)
+			fmt.Printf("not %d yet!!", i)
 		}
 	}
 }
