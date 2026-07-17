@@ -22,7 +22,7 @@ type AlaramManeger interface {
 }
 
 func main() {
-	n := 2
+	n := 1
 	c := Manager{}
 	//	fmt.Scanf("number of alrams:%d", &n)
 	for range n {
@@ -70,12 +70,6 @@ func Ringer() {
 	streamer, format, _ := mp3.Decode(f)
 	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/100))
 	speaker.Play(streamer)
-	for {
-
-		fmt.Println("its alarming!!!")
-		time.Sleep(10 * time.Second)
-		speaker.Close()
-		break
-
-	}
+	time.Sleep(1 * time.Second)
+	speaker.Close()
 }
