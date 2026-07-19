@@ -2,91 +2,25 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"time"
 
 	"github.com/swordde/unsonzer.git/fyne"
 
-	"github.com/gopxl/beep/mp3"
-	"github.com/gopxl/beep/speaker"
+	"github.com/swordde/unsonzer.git/alaram"
 )
-
-type Alaram struct {
-	Hour   int
-	minute int
-}
-type Manager struct {
-	alram []Alaram
-}
-type AlaramManeger interface {
-	Createalaram(a Alaram)
-	Schedular()
-}
 
 func main() {
 	fyne.Thething()
 	n := 2
 
-	c := Manager{}
+	c := alaram.Manager{}
 	//	fmt.Scanf("number of alrams:%d", &n)
 	for range n {
-		H := Alaram{}
+		H := alaram.Alaram{}
 		fmt.Scanf("%d", &H.Hour)
-		fmt.Scanf("%d", &H.minute)
+		fmt.Scanf("%d", &H.Minute)
 
 		c.Createalaram(H)
 	}
 	fmt.Println("Alarams:", c)
-	c.Schedular()
-}
-
-func (c *Manager) Createalaram(a Alaram) {
-	c.alram = append(c.alram, a)
-	fmt.Printf("alaram is created at %v hours and %v minute", a.Hour, a.minute)
-}
-
-func (c Manager) Schedular() {
-	i := 0
-	j := 0
-	for {
-		now := time.Now()
-		hour := now.Hour()
-
-		minute := now.Minute()
-		fmt.Printf("%v", hour)
-
-		time.Sleep(1 * time.Second)
-		d := c.alram[j]
-		if hour == d.Hour && minute == d.minute {
-			fmt.Println("The alram is going on pls finish the task to stop the alram")
-			Ringer()
-			time.Sleep(2 * time.Second)
-			if len(c.alram)-1 != j {
-				j = j + 1
-			}
-
-		} else {
-			i = i + 1
-			fmt.Printf("not %d yet!!", i)
-
-		}
-	}
-}
-
-func Ringer() {
-	f, err := os.Open("/home/swordemon/Music/I Need More Space - Jeremy Black.mp3")
-	if err != nil {
-		panic("err")
-	}
-	streamer, format, _ := mp3.Decode(f)
-	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/100))
-	speaker.Play(streamer)
-	for {
-
-		fmt.Println("its alarming!!!")
-		time.Sleep(10 * time.Second)
-		speaker.Clear()
-		break
-
-	}
+	go c.Schedular()
 }
