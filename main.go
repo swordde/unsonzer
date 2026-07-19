@@ -5,6 +5,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/swordde/unsonzer.git/fyne"
+
 	"github.com/gopxl/beep/mp3"
 	"github.com/gopxl/beep/speaker"
 )
@@ -22,7 +24,9 @@ type AlaramManeger interface {
 }
 
 func main() {
-	n := 1
+	fyne.Thething()
+	n := 2
+
 	c := Manager{}
 	//	fmt.Scanf("number of alrams:%d", &n)
 	for range n {
@@ -57,19 +61,32 @@ func (c Manager) Schedular() {
 			fmt.Println("The alram is going on pls finish the task to stop the alram")
 			Ringer()
 			time.Sleep(2 * time.Second)
-			j = +1
+			if len(c.alram)-1 != j {
+				j = j + 1
+			}
+
 		} else {
 			i = i + 1
 			fmt.Printf("not %d yet!!", i)
+
 		}
 	}
 }
 
 func Ringer() {
-	f, _ := os.Open("/home/swordemon/Music/I Need More Space - Jeremy Black.mp3")
+	f, err := os.Open("/home/swordemon/Music/I Need More Space - Jeremy Black.mp3")
+	if err != nil {
+		panic("err")
+	}
 	streamer, format, _ := mp3.Decode(f)
 	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/100))
 	speaker.Play(streamer)
-	time.Sleep(1 * time.Second)
-	speaker.Close()
+	for {
+
+		fmt.Println("its alarming!!!")
+		time.Sleep(10 * time.Second)
+		speaker.Clear()
+		break
+
+	}
 }
