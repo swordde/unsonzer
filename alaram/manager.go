@@ -21,35 +21,28 @@ type AlaramManeger interface {
 	Schedular()
 }
 
-func (c *Manager) Createalaram(a Alaram) {
+func (c *Manager) Createalaram(a Alaram) *Manager {
 	c.alram = append(c.alram, a)
 	fmt.Printf("alaram is created at %v hours and %v minute", a.Hour, a.Minute)
+	return c
 }
 
-func (c Manager) Schedular() {
-	i := 0
-	j := 0
+func (c *Manager) Schedular() {
 	for {
+		fmt.Println("schedular")
 		now := time.Now()
-		hour := now.Hour()
+		fmt.Println(c.alram)
 
-		minute := now.Minute()
-		fmt.Printf("%v", hour)
+		for _, alarm := range c.alram {
+			fmt.Println("for loop")
+			if now.Hour() == alarm.Hour &&
+				now.Minute() == alarm.Minute {
 
-		time.Sleep(1 * time.Second)
-		d := c.alram[j]
-		if hour == d.Hour && minute == d.Minute {
-			fmt.Println("The alram is going on pls finish the task to stop the alram")
-			ringer.Ringer()
-			time.Sleep(2 * time.Second)
-			if len(c.alram)-1 != j {
-				j = j + 1
+				fmt.Println("Alarm triggered")
+				ringer.Ringer()
 			}
-
-		} else {
-			i = i + 1
-			fmt.Printf("not %d yet!!", i)
-
 		}
+
+		time.Sleep(time.Second)
 	}
 }

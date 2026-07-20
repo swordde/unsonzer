@@ -1,17 +1,22 @@
 package fyne
 
 import (
-	"fmt"
+	"strconv"
 
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
-	_ "github.com/swordde/unsonzer.git/alaram"
+	"github.com/swordde/unsonzer.git/alaram"
 )
 
-func Thething() {
-	//h:=alaram.Alaram{}
-	a := app.NewWithID("github.com/swordde/unsonzer.git")
+type Manager12 struct {
+	alaram.Manager
+}
+
+func (c *Manager12) Thething() {
+	h := alaram.Alaram{}
+
+	a := app.NewWithID("com.swordde.unsonzer")
 
 	w := a.NewWindow("Hello World")
 
@@ -20,8 +25,9 @@ func Thething() {
 	hourEntry.SetPlaceHolder("Hour")
 	minute.SetPlaceHolder("minute")
 	createButton := widget.NewButton("Create Alarm", func() {
-		fmt.Println(hourEntry.Text)
-		fmt.Println(minute.Text)
+		h.Hour, _ = strconv.Atoi(hourEntry.Text)
+		h.Minute, _ = strconv.Atoi(minute.Text)
+		c.Createalaram(h)
 	})
 	w.SetContent(
 		container.NewVBox(
