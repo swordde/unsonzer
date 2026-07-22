@@ -14,8 +14,11 @@ func Ringer() {
 	if err != nil {
 		panic(err)
 	}
-	streamer, format, _ := mp3.Decode(f)
-	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/100))
+	streamer, format, err := mp3.Decode(f)
+	if err != nil {
+		panic(err)
+	}
+	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second))
 	speaker.Play(streamer)
 	for {
 
