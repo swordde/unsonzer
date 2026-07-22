@@ -1,6 +1,7 @@
 package fyne
 
 import (
+	"fmt"
 	"strconv"
 
 	"fyne.io/fyne/v2/app"
@@ -9,11 +10,7 @@ import (
 	"github.com/swordde/unsonzer.git/alaram"
 )
 
-type Manager12 struct {
-	alaram.Manager
-}
-
-func (c *Manager12) Thething() {
+func Thething(c *alaram.Manager) {
 	h := alaram.Alaram{}
 
 	a := app.NewWithID("com.swordde.unsonzer")
@@ -28,6 +25,7 @@ func (c *Manager12) Thething() {
 		h.Hour, _ = strconv.Atoi(hourEntry.Text)
 		h.Minute, _ = strconv.Atoi(minute.Text)
 		c.Createalaram(h)
+		fmt.Println("this is the time:", c)
 	})
 	w.SetContent(
 		container.NewVBox(

@@ -8,11 +8,10 @@ import (
 )
 
 func main() {
-	k := &fyne.Manager12{}
 	c := alaram.Manager{}
 
 	go c.Schedular()
-	k.Thething()
+	fyne.Thething(&c)
 
 	//	fmt.Scanf("number of alrams:%d", &n)
 

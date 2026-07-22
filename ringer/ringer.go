@@ -3,7 +3,6 @@ package ringer
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/gopxl/beep/mp3"
@@ -11,9 +10,9 @@ import (
 )
 
 func Ringer() {
-	f, err := os.Open("/home/swordemon/Music/I Need More Space - Jeremy Black.mp3")
+	f, err := Assets.Open("assets/alaram.mp3")
 	if err != nil {
-		panic("err")
+		panic(err)
 	}
 	streamer, format, _ := mp3.Decode(f)
 	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/100))
