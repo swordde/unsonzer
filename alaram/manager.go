@@ -9,8 +9,9 @@ import (
 )
 
 type Alaram struct {
-	Hour   int
-	Minute int
+	Hour     int
+	Minute   int
+	Trigered bool
 }
 type Manager struct {
 	alram []Alaram
@@ -33,13 +34,20 @@ func (c *Manager) Schedular() {
 		now := time.Now()
 		fmt.Println(c.alram)
 
-		for _, alarm := range c.alram {
+		for i := range c.alram {
+			alarm := &c.alram[i]
 			fmt.Println("for loop")
 			if now.Hour() == alarm.Hour &&
 				now.Minute() == alarm.Minute {
+				fmt.Println(alarm.Trigered)
 
-				fmt.Println("Alarm triggered")
-				ringer.Ringer()
+				if !alarm.Trigered {
+					fmt.Println("Alarm triggered")
+
+					alarm.Trigered = true
+
+					ringer.Ringer()
+				}
 			}
 		}
 

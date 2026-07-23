@@ -24,6 +24,7 @@ func Thething(c *alaram.Manager) {
 	createButton := widget.NewButton("Create Alarm", func() {
 		h.Hour, _ = strconv.Atoi(hourEntry.Text)
 		h.Minute, _ = strconv.Atoi(minute.Text)
+		h.Trigered = false
 		c.Createalaram(h)
 		fmt.Println("this is the time:", c)
 	})
