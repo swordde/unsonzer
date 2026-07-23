@@ -37,6 +37,7 @@ func (c *Manager) Schedular() {
 		for i := range c.alram {
 			alarm := &c.alram[i]
 			fmt.Println("for loop")
+			fmt.Println("the alrams are:", c.alram)
 			if now.Hour() == alarm.Hour &&
 				now.Minute() == alarm.Minute {
 				fmt.Println(alarm.Trigered)
