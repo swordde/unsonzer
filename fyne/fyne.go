@@ -3,6 +3,7 @@ package fyne
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
@@ -16,6 +17,12 @@ func Thething(c *alaram.Manager) {
 	a := app.NewWithID("com.swordde.unsonzer")
 
 	w := a.NewWindow("Hello World")
+	message := widget.NewLabel("welcome")
+
+	clock := widget.NewButton("Button", func() {
+		formatted := time.Now().Format("10:20:30")
+		message.SetText(formatted)
+	})
 
 	hourEntry := widget.NewEntry()
 	minute := widget.NewEntry()
@@ -33,6 +40,8 @@ func Thething(c *alaram.Manager) {
 			hourEntry,
 			minute,
 			createButton,
+			message,
+			clock,
 		),
 	)
 	w.ShowAndRun()
