@@ -5,11 +5,17 @@ import (
 	"strconv"
 	"time"
 
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 	"github.com/swordde/unsonzer.git/alaram"
 )
+
+func timeupdater(clock *widget.Label) {
+	format := time.Now().Format("15:04:05")
+	clock.SetText(format)
+}
 
 func Thething(c *alaram.Manager) {
 	h := alaram.Alaram{}
@@ -17,12 +23,10 @@ func Thething(c *alaram.Manager) {
 	a := app.NewWithID("com.swordde.unsonzer")
 
 	w := a.NewWindow("Hello World")
-	message := widget.NewLabel("welcome")
 
-	clock := widget.NewButton("Button", func() {
-		formatted := time.Now().Format("10:20:30")
-		message.SetText(formatted)
-	})
+	clock := widget.NewLabel("")
+
+	timeupdater(clock)
 
 	hourEntry := widget.NewEntry()
 	minute := widget.NewEntry()
@@ -40,9 +44,19 @@ func Thething(c *alaram.Manager) {
 			hourEntry,
 			minute,
 			createButton,
-			message,
 			clock,
 		),
 	)
+	go func() {
+		ticker := time.NewTicker(time.Second)
+		defer ticker.Stop()
+
+		for range ticker.C {
+			fyne.Do(func() {
+				timeupdater(clock)
+			})
+		}
+	}()
+
 	w.ShowAndRun()
 }
