@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/swordde/unsonzer.git/alaram"
 	"github.com/swordde/unsonzer.git/fyne"
 )
@@ -15,5 +13,5 @@ func main() {
 
 	//	fmt.Scanf("number of alrams:%d", &n)
 
-	fmt.Println("Alarams:", c)
+	// fmt.Println("Alarams:", c)
 }
